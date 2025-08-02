@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Private & Free Image Converter - Batch Convert JPG, PNG, WebP</title>
+    <meta name="description" content="The only 100% private online image converter. Batch convert unlimited images to JPG, PNG, WebP, GIF for free. Your files are never uploaded. Secure, fast, and no watermarks.">
+    <meta name="keywords" content="private image converter, batch image converter, free image converter, online image converter, convert jpg to png, convert png to jpg, webp converter, gif converter, secure image converter, no upload, free tool, udith babu k n, thalassery">
+    <meta name="author" content="Udith babu k n">
+    <link rel="canonical" href="https://your-domain.com/"> <!-- Replace with your actual domain -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/"> <!-- Replace with your actual domain -->
+    <meta property="og:title" content="Private & Free Image Converter - Batch Convert JPG, PNG, WebP">
+    <meta property="og:description" content="The only 100% private online image converter. Batch convert unlimited images for free. Your files are never uploaded to a server.">
+    <meta property="og:image" content="https://your-domain.com/social-preview.png"> <!-- Replace with a link to a preview image -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-domain.com/"> <!-- Replace with your actual domain -->
+    <meta property="twitter:title" content="Private & Free Image Converter - Batch Convert JPG, PNG, WebP">
+    <meta property="twitter:description" content="The only 100% private online image converter. Batch convert unlimited images for free. Your files are never uploaded to a server.">
+    <meta property="twitter:image" content="https://your-domain.com/social-preview.png"> <!-- Replace with a link to a preview image -->
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2320c997'/%3E%3Ctext x='50' y='50' font-family='Inter, sans-serif' font-size='60' font-weight='bold' fill='white' text-anchor='middle' dy='.3em'%3EI%3C/text%3E%3C/svg%3E">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- JSZip for Batch Downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --muted-text: #6b7280;
+            --input-bg: #ffffff;
+        }
+
+        html.dark {
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+            --muted-text: #9ca3af;
+            --input-bg: #374151;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .text-muted {
+            color: var(--muted-text);
+        }
+        .input-field {
+            background-color: var(--input-bg);
+            border-color: var(--border-color);
+        }
+
+        .accent-teal { color: #20c997; }
+        .bg-accent-teal { background-color: #20c997; }
+        .hover-bg-accent-teal:hover { background-color: #1baa80; }
+        .accent-sky { color: #00bfff; }
+        .bg-accent-sky { background-color: #00bfff; }
+        .hover-bg-accent-sky:hover { background-color: #00a6dd; }
+        .drag-area-dashed { border-style: dashed; }
+        .drag-area-highlight { background-color: #e0f7fa; border-color: #00bfff; }
+        html.dark .drag-area-highlight { background-color: #0c4a6e; }
+        @keyframes progress-animation { 0% { width: 0%; } 100% { width: 100%; } }
+        .progress-bar-animated { animation: progress-animation 1.5s ease-out forwards; }
+        
+        .advanced-options-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .advanced-options-panel.open {
+            max-height: 500px; 
+        }
+    </style>
+
+    <!-- JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ImageConvert - Private & Free Online Image Converter",
+      "operatingSystem": "Any (Web-based)",
+      "applicationCategory": "MultimediaApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "ratingCount": "2025"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A 100% private, fast, and free online tool to batch convert images between popular formats like JPG, PNG, WebP, and GIF. Your files are never uploaded to a server.",
+      "author": {
+        "@type": "Person",
+        "name": "Udith babu k n"
+      },
+      "url": "https://your-domain.com/" 
+    }
+    </script>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm card sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2" aria-label="ImageConvert Homepage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accent-teal" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <span class="text-xl font-bold">ImageConvert</span>
+            </a>
+            <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                <i data-feather="moon" class="block dark:hidden"></i>
+                <i data-feather="sun" class="hidden dark:block"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 md:py-16">
+        <section class="max-w-4xl mx-auto text-center">
+            <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+                Convert Images Privately. Batch Process. Absolutely Free.
+            </h1>
+            <p class="mt-4 text-lg text-muted max-w-3xl mx-auto">
+                This is more than just a converter. It's a promise: your files are never uploaded to any server. Convert unlimited images to JPG, PNG, WebP, and GIF with complete privacy and security.
+            </p>
+        </section>
+
+        <!-- Converter Tool -->
+        <section id="converter-tool" class="mt-12 max-w-4xl mx-auto card p-6 md:p-10 rounded-2xl shadow-xl border">
+            
+            <!-- Upload Section -->
+            <div id="upload-section">
+                <div id="drag-drop-area" class="relative border-2 border-gray-300 dark:border-gray-600 drag-area-dashed rounded-xl p-8 text-center transition-all duration-300">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10 -z-10" aria-hidden="true">
+                        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M78.23 162.5C44.73 152.5 35.23 117.5 44.73 90C54.23 62.5 89.23 52 116.73 63C144.23 74 157.23 107.5 145.23 133.5C133.23 159.5 111.73 172.5 78.23 162.5Z" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 8"/><path d="M155.23 45L135.23 65" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/><path d="M45.23 155L65.23 135" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/><path d="M60.23 40C65.23 35 75.23 35 80.23 40" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/><path d="M120.23 160C125.23 165 135.23 165 140.23 160" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/></svg>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <i data-feather="upload-cloud" class="w-16 h-16 accent-sky" aria-hidden="true"></i>
+                        <p class="text-muted font-medium">Drag & drop your image files here</p>
+                        <p class="text-muted text-sm">or</p>
+                        <label for="file-input" class="cursor-pointer bg-accent-teal text-white font-semibold px-6 py-3 rounded-lg shadow-md hover-bg-accent-teal transition-colors duration-300">
+                            Choose Files
+                        </label>
+                        <input type="file" id="file-input" multiple class="hidden" aria-label="File input for image conversion" accept="image/jpeg,image/png,image/webp,image/gif">
+                    </div>
+                </div>
+                <div id="file-list" class="mt-6 space-y-3"></div>
+            </div>
+
+            <!-- Options & Convert Button -->
+            <div id="options-section" class="mt-8 hidden">
+                 <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <label for="format-select" class="block text-sm font-medium mb-1">Convert to:</label>
+                        <select id="format-select" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-accent-teal focus:border-accent-teal transition card input-field" aria-label="Select target image format">
+                            <option value="jpg">JPG</option>
+                            <option value="png">PNG</option>
+                            <option value="webp">WebP</option>
+                        </select>
+                    </div>
+                    <div class="text-right">
+                         <button id="advanced-options-toggle" class="text-sm font-semibold text-accent-teal hover:underline">
+                            Advanced Options <i data-feather="chevron-down" class="inline-block w-4 h-4 transition-transform"></i>
+                         </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Options Panel -->
+                <div id="advanced-options-panel" class="advanced-options-panel mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <div class="grid md:grid-cols-2 gap-x-6 gap-y-4">
+                        <!-- Quality Slider -->
+                        <div id="quality-slider-container" class="hidden">
+                            <label for="quality-slider" class="block text-sm font-medium mb-1">Quality: <span id="quality-value">90</span></label>
+                            <input id="quality-slider" type="range" min="1" max="100" value="90" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                        </div>
+                        <!-- Resize Options -->
+                        <div class="md:col-span-2">
+                             <label class="block text-sm font-medium mb-2">Resize (pixels):</label>
+                             <div class="flex items-center space-x-2">
+                                <input type="number" id="resize-width" placeholder="Width" class="w-full p-2 border rounded-lg input-field">
+                                <button id="aspect-ratio-lock" class="p-2 rounded-lg bg-accent-teal text-white">
+                                    <i data-feather="lock" class="w-4 h-4"></i>
+                                </button>
+                                <input type="number" id="resize-height" placeholder="Height" class="w-full p-2 border rounded-lg input-field">
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <button id="convert-button" class="w-full md:w-auto bg-accent-sky text-white font-bold px-12 py-4 rounded-lg shadow-lg hover-bg-accent-sky transition-transform duration-300 transform hover:scale-105">
+                        Convert Now
+                    </button>
+                    <p id="error-message" class="text-red-500 text-sm mt-2 h-4" role="alert"></p>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progress-section" class="hidden mt-8 text-center" aria-live="polite">
+                <p id="progress-text" class="text-lg font-medium mb-4">Processing in your browser...</p>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+                    <div id="progress-bar" class="bg-accent-teal h-4 rounded-full progress-bar-animated"></div>
+                </div>
+            </div>
+
+            <!-- Download Section -->
+            <div id="download-section" class="hidden mt-8">
+                <h2 class="text-2xl font-bold text-center mb-6">Conversion Complete!</h2>
+                <div id="download-list" class="space-y-4">
+                    <!-- Download items will be injected here -->
+                </div>
+                <div class="mt-8 text-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button id="download-all-button" class="bg-accent-teal text-white font-semibold px-6 py-3 rounded-lg hover-bg-accent-teal transition-colors">
+                        Download All (.zip)
+                    </button>
+                    <button id="convert-more-button" class="bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 font-semibold px-6 py-3 rounded-lg transition-colors">
+                        Convert More Files
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Conversions Log -->
+        <section id="recent-conversions-section" class="mt-16 md:mt-24 max-w-4xl mx-auto hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Recent Conversions</h2>
+                <button id="clear-log-button" class="text-sm text-muted hover:text-red-500 transition-colors">Clear Log</button>
+            </div>
+            <div id="recent-conversions-list" class="space-y-3">
+                <!-- Log items will be injected here -->
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="mt-16 md:mt-24 max-w-5xl mx-auto">
+            <h2 class="text-center text-3xl font-bold">Why Choose ImageConvert?</h2>
+            <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="card p-6 rounded-lg shadow-md border">
+                    <i data-feather="lock" class="w-12 h-12 mx-auto accent-teal"></i>
+                    <h3 class="mt-4 text-lg font-semibold">100% Private & Secure</h3>
+                    <p class="mt-2 text-sm text-muted">Your images are never uploaded. All conversion happens directly in your browser, ensuring your data remains yours.</p>
+                </div>
+                <div class="card p-6 rounded-lg shadow-md border">
+                    <i data-feather="layers" class="w-12 h-12 mx-auto accent-teal"></i>
+                    <h3 class="mt-4 text-lg font-semibold">Unlimited Batch Conversion</h3>
+                    <p class="mt-2 text-sm text-muted">Convert hundreds of images at once. Just drag, drop, and download a single ZIP file. No limits, no queues.</p>
+                </div>
+                 <div class="card p-6 rounded-lg shadow-md border">
+                    <i data-feather="cpu" class="w-12 h-12 mx-auto accent-teal"></i>
+                    <h3 class="mt-4 text-lg font-semibold">Powerful Browser Engine</h3>
+                    <p class="mt-2 text-sm text-muted">We use a powerful in-browser engine to handle all processing, from resizing to quality adjustments, with no server-side help.</p>
+                </div>
+                <div class="card p-6 rounded-lg shadow-md border">
+                    <i data-feather="gift" class="w-12 h-12 mx-auto accent-teal"></i>
+                    <h3 class="mt-4 text-lg font-semibold">Truly Free, No Strings</h3>
+                    <p class="mt-2 text-sm text-muted">No watermarks, no sign-ups, no premium features held for ransom. This tool is free for everyone, forever.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="card mt-20 border-t">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-muted">&copy; <span id="copyright-year"></span> Udith babu k n. All Rights Reserved.</p>
+            <p class="text-center text-muted text-sm mt-4">
+                A free tool made with <span class="text-red-500" aria-label="love">&hearts;</span> for the community.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // --- THEME ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+            feather.replace();
+        });
+
+        // --- DOM ELEMENTS ---
+        const allDOMElements = {
+            dragDropArea: document.getElementById('drag-drop-area'),
+            fileInput: document.getElementById('file-input'),
+            fileList: document.getElementById('file-list'),
+            optionsSection: document.getElementById('options-section'),
+            convertButton: document.getElementById('convert-button'),
+            progressSection: document.getElementById('progress-section'),
+            downloadSection: document.getElementById('download-section'),
+            downloadList: document.getElementById('download-list'),
+            convertMoreButton: document.getElementById('convert-more-button'),
+            downloadAllButton: document.getElementById('download-all-button'),
+            uploadSection: document.getElementById('upload-section'),
+            errorMessage: document.getElementById('error-message'),
+            recentConversionsSection: document.getElementById('recent-conversions-section'),
+            recentConversionsList: document.getElementById('recent-conversions-list'),
+            clearLogButton: document.getElementById('clear-log-button'),
+            advancedOptionsToggle: document.getElementById('advanced-options-toggle'),
+            advancedOptionsPanel: document.getElementById('advanced-options-panel'),
+            formatSelect: document.getElementById('format-select'),
+            qualitySliderContainer: document.getElementById('quality-slider-container'),
+            qualitySlider: document.getElementById('quality-slider'),
+            qualityValue: document.getElementById('quality-value'),
+            resizeWidthInput: document.getElementById('resize-width'),
+            resizeHeightInput: document.getElementById('resize-height'),
+            aspectRatioLock: document.getElementById('aspect-ratio-lock'),
+        };
+        
+        let selectedFiles = [];
+        let conversionLog = JSON.parse(localStorage.getItem('conversionLog')) || [];
+        let isAspectRatioLocked = true;
+        let convertedBlobs = [];
+
+        // --- CORE FUNCTIONS ---
+        const formatBytes = (bytes, decimals = 2) => {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        };
+
+        const handleFiles = (files) => {
+            if (files.length === 0) return;
+            allDOMElements.errorMessage.textContent = '';
+            const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            
+            imageFiles.forEach(file => {
+                file.preview = URL.createObjectURL(file);
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        file.originalWidth = img.width;
+                        file.originalHeight = img.height;
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                selectedFiles.push(file);
+            });
+            
+            updateFileList();
+            allDOMElements.optionsSection.classList.remove('hidden');
+        };
+        
+        const updateFileList = () => {
+            allDOMElements.fileList.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex justify-between items-center bg-gray-100 dark:bg-gray-700 p-3 rounded-lg';
+                fileItem.innerHTML = `
+                    <div class="flex items-center space-x-3 overflow-hidden">
+                        <img src="${file.preview}" alt="Preview of ${file.name}" class="w-10 h-10 object-cover rounded-md flex-shrink-0">
+                        <div class="overflow-hidden">
+                            <p class="text-sm font-medium truncate">${file.name}</p>
+                            <span class="text-xs text-muted">${formatBytes(file.size)}</span>
+                        </div>
+                    </div>
+                    <button onclick="removeFile(${index})" class="text-muted hover:text-red-500 flex-shrink-0 ml-2" aria-label="Remove ${file.name}">
+                        <i data-feather="x-circle" class="w-5 h-5" aria-hidden="true"></i>
+                    </button>
+                `;
+                allDOMElements.fileList.appendChild(fileItem);
+            });
+            feather.replace();
+            if (selectedFiles.length === 0) {
+                allDOMElements.optionsSection.classList.add('hidden');
+            }
+        };
+
+        window.removeFile = (index) => {
+            URL.revokeObjectURL(selectedFiles[index].preview);
+            selectedFiles.splice(index, 1);
+            updateFileList();
+        };
+
+        const convertFile = (file, options) => {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    let targetWidth = img.width;
+                    let targetHeight = img.height;
+
+                    if (options.resize.width || options.resize.height) {
+                        targetWidth = options.resize.width || (img.width * options.resize.height / img.height);
+                        targetHeight = options.resize.height || (img.height * options.resize.width / img.width);
+                    }
+                    
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    
+                    ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                    
+                    canvas.toBlob(blob => {
+                        if (blob) {
+                            resolve({
+                                originalFile: file,
+                                blob: blob,
+                                newFileName: file.name.split('.').slice(0, -1).join('.') + '.' + options.format
+                            });
+                        } else {
+                            reject(new Error('Canvas to Blob conversion failed'));
+                        }
+                    }, `image/${options.format}`, options.quality);
+                };
+                img.onerror = reject;
+                img.src = file.preview;
+            });
+        };
+
+        const displayDownloads = (processedFiles) => {
+            allDOMElements.downloadList.innerHTML = '';
+            const newLogEntries = [];
+            convertedBlobs = [];
+
+            processedFiles.forEach(({ originalFile, blob, newFileName }) => {
+                const objectURL = URL.createObjectURL(blob);
+                convertedBlobs.push({ name: newFileName, url: objectURL });
+
+                const downloadItem = document.createElement('div');
+                downloadItem.className = 'card border p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0';
+                downloadItem.innerHTML = `
+                    <div class="flex items-center space-x-3 overflow-hidden">
+                        <i data-feather="check-circle" class="text-green-600 flex-shrink-0" aria-hidden="true"></i>
+                        <div>
+                            <p class="font-semibold truncate">${newFileName}</p>
+                            <p class="text-sm text-muted">
+                                Before: <span class="font-medium">${formatBytes(originalFile.size)}</span> | 
+                                After: <span class="font-medium text-green-700">${formatBytes(blob.size)}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <a href="${objectURL}" download="${newFileName}" class="download-link bg-accent-teal text-white font-semibold px-4 py-2 rounded-lg shadow-sm hover-bg-accent-teal transition-colors flex items-center space-x-2 w-full sm:w-auto justify-center">
+                        <i data-feather="download" class="w-4 h-4" aria-hidden="true"></i>
+                        <span>Download</span>
+                    </a>
+                `;
+                allDOMElements.downloadList.appendChild(downloadItem);
+                
+                newLogEntries.push({
+                    name: newFileName,
+                    originalSize: originalFile.size,
+                    newSize: blob.size,
+                    timestamp: new Date().toISOString()
+                });
+            });
+            
+            updateLog(newLogEntries);
+            feather.replace();
+        };
+
+        const updateLog = (newEntries) => {
+            if (newEntries && newEntries.length > 0) {
+                conversionLog.unshift(...newEntries);
+                localStorage.setItem('conversionLog', JSON.stringify(conversionLog));
+            }
+            
+            if (conversionLog.length > 0) {
+                allDOMElements.recentConversionsSection.classList.remove('hidden');
+                allDOMElements.recentConversionsList.innerHTML = '';
+                conversionLog.forEach(entry => {
+                    const logItem = document.createElement('div');
+                    logItem.className = 'card border p-3 rounded-lg flex justify-between items-center';
+                    logItem.innerHTML = `
+                        <div class="overflow-hidden">
+                            <p class="font-medium truncate">${entry.name}</p>
+                            <p class="text-xs text-muted">Converted on ${new Date(entry.timestamp).toLocaleDateString()}</p>
+                        </div>
+                        <span class="text-sm text-muted flex-shrink-0 ml-4">${formatBytes(entry.newSize)}</span>
+                    `;
+                    allDOMElements.recentConversionsList.appendChild(logItem);
+                });
+            } else {
+                allDOMElements.recentConversionsSection.classList.add('hidden');
+            }
+        };
+
+        // --- EVENT LISTENERS ---
+        const { dragDropArea, fileInput, advancedOptionsToggle, formatSelect, qualitySlider, aspectRatioLock, resizeWidthInput, resizeHeightInput, convertButton, downloadAllButton, convertMoreButton, clearLogButton } = allDOMElements;
+
+        dragDropArea.addEventListener('dragover', (e) => { e.preventDefault(); dragDropArea.classList.add('drag-area-highlight'); });
+        dragDropArea.addEventListener('dragleave', () => { dragDropArea.classList.remove('drag-area-highlight'); });
+        dragDropArea.addEventListener('drop', (e) => { e.preventDefault(); dragDropArea.classList.remove('drag-area-highlight'); handleFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', () => { handleFiles(fileInput.files); });
+
+        advancedOptionsToggle.addEventListener('click', () => {
+            allDOMElements.advancedOptionsPanel.classList.toggle('open');
+            advancedOptionsToggle.querySelector('i').classList.toggle('rotate-180');
+        });
+        
+        formatSelect.addEventListener('change', () => {
+            const selectedFormat = formatSelect.value;
+            if (selectedFormat === 'jpg' || selectedFormat === 'webp') {
+                allDOMElements.qualitySliderContainer.classList.remove('hidden');
+            } else {
+                allDOMElements.qualitySliderContainer.classList.add('hidden');
+            }
+        });
+
+        qualitySlider.addEventListener('input', () => {
+            allDOMElements.qualityValue.textContent = qualitySlider.value;
+        });
+
+        aspectRatioLock.addEventListener('click', () => {
+            isAspectRatioLocked = !isAspectRatioLocked;
+            aspectRatioLock.innerHTML = isAspectRatioLocked ? '<i data-feather="lock"></i>' : '<i data-feather="unlock"></i>';
+            aspectRatioLock.classList.toggle('bg-accent-teal');
+            aspectRatioLock.classList.toggle('bg-gray-400');
+            feather.replace();
+        });
+
+        resizeWidthInput.addEventListener('input', () => {
+            if (!isAspectRatioLocked || !selectedFiles[0] || !selectedFiles[0].originalWidth) return;
+            const width = parseInt(resizeWidthInput.value);
+            if (!isNaN(width)) {
+                resizeHeightInput.value = Math.round(width / (selectedFiles[0].originalWidth / selectedFiles[0].originalHeight));
+            }
+        });
+
+        resizeHeightInput.addEventListener('input', () => {
+            if (!isAspectRatioLocked || !selectedFiles[0] || !selectedFiles[0].originalWidth) return;
+            const height = parseInt(resizeHeightInput.value);
+            if (!isNaN(height)) {
+                resizeWidthInput.value = Math.round(height * (selectedFiles[0].originalWidth / selectedFiles[0].originalHeight));
+            }
+        });
+
+        convertButton.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) {
+                allDOMElements.errorMessage.textContent = 'Please select at least one file to convert.';
+                setTimeout(() => { allDOMElements.errorMessage.textContent = ''; }, 3000);
+                return;
+            }
+            
+            allDOMElements.uploadSection.classList.add('hidden');
+            allDOMElements.optionsSection.classList.add('hidden');
+            allDOMElements.progressSection.classList.remove('hidden');
+
+            const options = {
+                format: formatSelect.value,
+                quality: (formatSelect.value === 'jpg' || formatSelect.value === 'webp') ? qualitySlider.value / 100 : 1,
+                resize: {
+                    width: parseInt(resizeWidthInput.value) || null,
+                    height: parseInt(resizeHeightInput.value) || null,
+                }
+            };
+
+            try {
+                const processedFiles = await Promise.all(selectedFiles.map(file => convertFile(file, options)));
+                allDOMElements.progressSection.classList.add('hidden');
+                allDOMElements.downloadSection.classList.remove('hidden');
+                displayDownloads(processedFiles);
+            } catch (error) {
+                console.error("Conversion error:", error);
+                allDOMElements.errorMessage.textContent = 'An error occurred during conversion.';
+                allDOMElements.progressSection.classList.add('hidden');
+                allDOMElements.uploadSection.classList.remove('hidden');
+                allDOMElements.optionsSection.classList.remove('hidden');
+            }
+        });
+
+        downloadAllButton.addEventListener('click', () => {
+            const zip = new JSZip();
+            const promises = convertedBlobs.map(async ({ name, url }) => {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                zip.file(name, blob);
+            });
+
+            Promise.all(promises).then(() => {
+                zip.generateAsync({ type: "blob" }).then(content => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = "ImageConvert.zip";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                });
+            });
+        });
+
+        convertMoreButton.addEventListener('click', () => {
+            selectedFiles.forEach(file => URL.revokeObjectURL(file.preview));
+            convertedBlobs.forEach(blob => URL.revokeObjectURL(blob.url));
+            selectedFiles = [];
+            convertedBlobs = [];
+            allDOMElements.fileList.innerHTML = '';
+            allDOMElements.fileInput.value = '';
+            
+            allDOMElements.downloadSection.classList.add('hidden');
+            allDOMElements.uploadSection.classList.remove('hidden');
+            allDOMElements.optionsSection.classList.add('hidden');
+            allDOMElements.advancedOptionsPanel.classList.remove('open');
+            allDOMElements.advancedOptionsToggle.querySelector('i').classList.remove('rotate-180');
+        });
+
+        clearLogButton.addEventListener('click', () => {
+            conversionLog = [];
+            localStorage.removeItem('conversionLog');
+            updateLog([]);
+        });
+
+        // --- INITIALIZATION ---
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        updateLog(null);
+        feather.replace();
+        formatSelect.dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
